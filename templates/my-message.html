@@ -1,0 +1,37 @@
+<head>
+<template id="message">
+	<style>
+		.msg-wrapper
+		{
+			border:1px solid;
+			padding: 9px;
+		}
+		.msg
+		{
+			color: brown;
+		}
+	</style>
+	<div class="msg-wrapper">
+		<div class="msg">
+			This is my Message!!
+		</div>
+	</div>
+</template>
+<script>
+	console.log("registered x-foo");
+	var XFooPrototype = Object.create(HTMLElement.prototype);
+	XFooPrototype.createdCallback = function() {
+		console.log("createdCallback");
+		var shadow = this.createShadowRoot();
+		var template = document.querySelector('link[rel="import"]').import.querySelector('#message');
+		console.log("message=" + template);
+		shadow.appendChild(template.content);
+		//this.textContent = "I'm an x-foo!";
+	};
+
+	var XFoo = document.registerElement('x-foo', {
+		prototype: XFooPrototype
+	});
+	console.log("registered x-foo");
+</script>
+</head>
